@@ -6,16 +6,26 @@ var logger = require('morgan');
 var sass = require('node-sass');
 var route = require('./server/routes/index');
 var users = require('./server/routes/users');
-
+const flash = require('connect-flash');
+// 몽구스 ODM
+var mongoose = require('mongoose');
+// 세션 저장용 모듈
+var session = require('express-session');
+var MongoStore = require('connect-mongo');
 
 var indexRouter = require('./server/routes/index');
 var usersRouter = require('./server/routes/users');
 
 var app = express();
 
+
+
 // view engine setup
-app.set('views', path.join(__dirname, 'server/views'));
+app.set('views', path.join(__dirname, 'server/views/pages'));
 app.set('view engine', 'ejs');
+
+//데이터베이스 설정
+var config = require('./server/config/config.js');
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -37,6 +47,8 @@ app.use(function(req, res, next) {
   next(createError(404));
 });
 
+app.use(flash());
+
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
@@ -47,5 +59,7 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+
 
 module.exports = app;
