@@ -1,9 +1,8 @@
 {
   "name": "chapter1",
-  "discription" : "blue print chapter 1. using mvc",
+  "discription": "blue print chapter 1. using mvc",
   "version": "0.0.0",
   "private": true,
-  
   "scripts": {
     "start": "node ./bin/www"
   },
@@ -14,6 +13,20 @@
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
     "morgan": "~1.9.1",
+    "node-sass": "^6.0.1",
     "node-sass-middleware": "0.11.0"
-  }
+  },
+  "main": "app.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ssb00134/blueprint-chapter1.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ssb00134/blueprint-chapter1/issues"
+  },
+  "homepage": "https://github.com/ssb00134/blueprint-chapter1#readme",
+  "description": ""
 }
