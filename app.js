@@ -9,6 +9,8 @@ var users = require('./server/routes/users');
 const flash = require('connect-flash');
 // 몽구스 ODM
 var mongoose = require('mongoose');
+//데이터베이스 설정
+var config = require('./server/config/config.js');
 // 세션 저장용 모듈
 var session = require('express-session');
 var MongoStore = require('connect-mongo');
@@ -24,8 +26,25 @@ var app = express();
 app.set('views', path.join(__dirname, 'server/views/pages'));
 app.set('view engine', 'ejs');
 
-//데이터베이스 설정
-var config = require('./server/config/config.js');
+
+// 데이터베이스 연결
+mongoose.connect(config.url);
+// 몽고DB가 실행 중인지 체크
+mongoose.connection.on('error', function () {
+    console.error('MongoDB Connection Error. Make sure MongoDB is running.');
+});
+
+app.use(session({
+    secret: 'sometextgohere',
+    saveUninitialized: true,
+    resave: true,
+    // express-session과 connect-mongo를 이용해 몽고DB에 세션 저장
+    store: new MongoStore({
+        mongoUrl: config.url,
+        collection: 'sessions'
+    })
+}));
+
 
 app.use(logger('dev'));
 app.use(express.json());
